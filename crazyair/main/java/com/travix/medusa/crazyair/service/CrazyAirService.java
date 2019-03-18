@@ -1,11 +1,12 @@
 package com.travix.medusa.crazyair.service;
 
 import com.travix.medusa.domain.common.Supplier;
+import com.travix.medusa.domain.common.service.MockService;
 import com.travix.medusa.domain.crazyair.CrazyAirRequest;
 import com.travix.medusa.domain.crazyair.CrazyAirResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,14 +17,12 @@ import java.util.stream.Collectors;
 @Service
 public class CrazyAirService implements Supplier<CrazyAirResponse, CrazyAirRequest>{
 
-    private static final List<CrazyAirResponse> CRAZYAIR_FLIGHTS_LIST = Arrays.asList(
-            new CrazyAirResponse("Iberia", 200, "B", "LGC", "LHR", "2019-03-10", "2019-03-12"),
-            new CrazyAirResponse("Vueling", 100, "E", "LGC", "LHR", "2019-03-10", "2019-03-12")
-    );
+    @Autowired
+    MockService mockService;
 
     @Override
     public CrazyAirResponse getFlights(CrazyAirRequest supplierRequest) {
-        CrazyAirResponse crazyAirResponse = getMatchingFlight(CRAZYAIR_FLIGHTS_LIST, supplierRequest);
+        CrazyAirResponse crazyAirResponse = getMatchingFlight(mockService.CRAZYAIR_FLIGHTS_LIST, supplierRequest);
 
         return crazyAirResponse;
     }
@@ -31,7 +30,7 @@ public class CrazyAirService implements Supplier<CrazyAirResponse, CrazyAirReque
     @Override
     public CrazyAirResponse getMatchingFlight(List<CrazyAirResponse> supplierFlightsList, CrazyAirRequest supplierRequest) {
 
-        List<CrazyAirResponse> matchingFlights = CRAZYAIR_FLIGHTS_LIST.stream().filter( flight ->
+        List<CrazyAirResponse> matchingFlights = mockService.CRAZYAIR_FLIGHTS_LIST.stream().filter( flight ->
                 /* Rules */
                 supplierRequest.getOrigin().equals(flight.getDepartureAirportCode()) &&
                 supplierRequest.getDestination().equals(flight.getDestinationAirportCode()) &&

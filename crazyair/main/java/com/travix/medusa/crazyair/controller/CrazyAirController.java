@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Generated;
-
 /**
  * Created by parisfreire on 11/03/2019.
  */
@@ -24,7 +22,6 @@ import javax.annotation.Generated;
      @GetMapping("/helloCrazyAir")
      public String helloCrazyAir() { return "hello from Crazy Air"; }
 
-
     @PostMapping("/getFlights")
     public ResponseEntity<CrazyAirResponse> getFlights(
             @RequestBody CrazyAirRequest crazyAirRequest) {
@@ -33,8 +30,5 @@ import javax.annotation.Generated;
 
         return new ResponseEntity<>(crazyAirResponse, HttpStatus.OK);
     }
-
-
-
 }
 
